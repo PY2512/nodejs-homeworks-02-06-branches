@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { users: ctrl } = require("../../controllers");
 const { ctrlWrapper } = require("../../helpers");
-const { auth, validation } = require("../../middlewares");
+const { auth, validation, upload } = require("../../middlewares");
 const { schemas } = require("../../models/user");
 
 // signup
@@ -18,5 +18,6 @@ router.get('/logout', auth, ctrlWrapper(ctrl.logout));
 
 router.patch('/update', auth, validation(schemas.updateSubUser), ctrlWrapper(ctrl.updateSubscription));
 
+router.patch("/avatars", auth, upload.single("avatar"), ctrlWrapper(ctrl.updateAvatar));
 
 module.exports = router;
